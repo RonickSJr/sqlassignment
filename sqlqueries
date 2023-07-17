@@ -1,0 +1,37 @@
+Repositry URL : https://github.com/abubakarqasim/sqlassignment/actions/new
+CREATE TABLE requirement (
+  requirement_number INT PRIMARY KEY,
+  requirement_text VARCHAR(255)
+);
+
+
+CREATE TABLE priority (
+  priority_value INT PRIMARY KEY,
+  priority_text VARCHAR(255)
+);
+
+
+CREATE TABLE status (
+  status_value INT PRIMARY KEY,
+  status_text VARCHAR(255)
+);
+
+
+
+CREATE TABLE tracking (
+  tracking_id INT PRIMARY KEY,
+  requirement_number INT,
+  priority_value INT,
+  status_value INT,
+  FOREIGN KEY (requirement_number) REFERENCES requirement(requirement_number),
+  FOREIGN KEY (priority_value) REFERENCES priority(priority_value),
+  FOREIGN KEY (status_value) REFERENCES status(status_value)
+);
+
+
+CREATE VIEW trackingView AS
+SELECT tr.tracking_id, r.requirement_text, p.priority_text, s.status_text
+FROM tracking tr
+JOIN requirement r ON tr.requirement_number = r.requirement_number
+JOIN priority p ON tr.priority_value = p.priority_value
+JOIN status s ON tr.status_value = s.status_value;
